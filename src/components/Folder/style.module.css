@@ -1,0 +1,68 @@
+.folderDiv{
+    display: flex;
+    align-content: space-between;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    height: 50px;
+    color:black;
+    border: 0.5px solid rgba(128, 128, 128, 0.185);
+    border-radius: 10px;
+}
+
+.folderImg{
+    background-image: url("../../assets/Images/folder.jpg");
+    background-size: 25px 25px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border: 0 !important;
+}
+
+.folderName{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: rgb(53, 56, 56);  
+}
+
+.menuImg{
+    background-image: url("../../assets/Images/menu.png");
+    background-size: 25px 25px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
+
+.menu {
+    position: relative;
+    display: inline-block;
+}
+
+.menuContent {
+    display: none;
+    position: absolute;
+    background-color: #d4e5f3;
+    min-width: 120px;
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .menu a {
+    color: rgb(6, 10, 59);
+    padding: 8px;
+    margin: 0;
+    text-decoration: none;
+    display: block;
+    font-size: 12px;
+  }
+  
+  .menu a:hover {
+    background-color: #ddd;
+    border-radius: 4px;
+  }
+  
+  .menu:hover .menuContent {
+    display: block;
+  }
+  
