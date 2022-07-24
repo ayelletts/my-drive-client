@@ -51,6 +51,7 @@ export default function Button(props) {
   // On file select (from the pop up)
   const onFileChange = (event) => {
     // Update the state
+    event.preventDefault();
     setSelectedFile(event.target.files[0]);
   };
 

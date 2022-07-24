@@ -10,6 +10,7 @@ export default function Folder(props) {
   const [rootContent, setRootContent] = useContext(RootContentContext);
 
   const onDblClick = (e) => {
+    e.preventDefault();
     setCurrentFolder(`${folder.parent}/${folder.name}`);
     axios
       .post(`http://localhost:3000/files/`, {
@@ -22,6 +23,7 @@ export default function Folder(props) {
   };
 
   const renameFolder = (e) => {
+    e.preventDefault();
     let newName = prompt("Enter new folder name ");
     axios
       .post(`http://localhost:3000/files/rename`, {
@@ -43,6 +45,7 @@ export default function Folder(props) {
   };
 
   const deleteFolder = (e) => {
+    e.preventDefault();
     axios
       .post(`http://localhost:3000/files/deleteFolder`, {
         folderName: `${folder.parent}/${folder.name}`.replace("./", ""),

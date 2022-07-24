@@ -11,6 +11,7 @@ export default function File(props) {
   const [fileInfo, setFileInfo] = useState(false);
 
   const renameFile = (e) => {
+    e.preventDefault();
     let newName = prompt("Enter new file name ");
     let ext = file.name.slice(file.name.lastIndexOf(".") + 1);
     newName = `${newName}.${ext}`;
@@ -34,6 +35,7 @@ export default function File(props) {
   };
 
   const deleteFile = (e) => {
+    e.preventDefault();
     axios
       .post(`http://localhost:3000/files/delete`, {
         filename: `${file.parent}/${file.name}`.replace("./", ""),
@@ -53,6 +55,7 @@ export default function File(props) {
   };
 
   const downloadFile = (e) => {
+    e.preventDefault();
     axios
       .post(`http://localhost:3000/files/download`, {
         filename: `${file.name}`,
@@ -63,10 +66,12 @@ export default function File(props) {
   };
 
   const showFileInfo = (e) => {
+    e.preventDefault();
     setFileInfo(true);
   };
 
   const closeFileInfo = (e) => {
+    e.preventDefault();
     setFileInfo(false);
   };
   return (
