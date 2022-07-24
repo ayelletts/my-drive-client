@@ -6,14 +6,13 @@ import axios from "axios";
 
 function App() {
   const [rootContent, setRootContent] = useState([]);
-  useEffect(() => {
-    axios
-      .post("http://localhost:3000/files/", { folder: "root" })
-      .then((res) => {
-        console.log(res.data);
-        setRootContent(res.data);
-      });
-  }, []);
+
+  // useEffect(() => {
+  axios.post("http://localhost:3000/files/", { folder: "root" }).then((res) => {
+    console.log(res.data);
+    setRootContent(res.data);
+  });
+  //}, []);
 
   return (
     <div>
