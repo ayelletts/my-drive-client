@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 
 export default function File(props) {
+  const FileSaver = require("file-saver");
   const file = props;
   const [currentFolder, setCurrentFolder] = useContext(CurrentFolderContext);
   const [rootContent, setRootContent] = useContext(RootContentContext);
@@ -20,17 +21,17 @@ export default function File(props) {
         oldName: `${file.parent}/${file.name}`,
         newName: `${file.parent}/${newName}`,
       })
+      // .then((res) => {
+      //   axios
+      //     .post(`http://localhost:3000/files/`, {
+      //       folder: file.parent.replace("./", ""),
+      //     })
       .then((res) => {
-        axios
-          .post(`http://localhost:3000/files/`, {
-            folder: file.parent.replace("./", ""),
-          })
-          .then((res) => {
-            setRootContent(res.data);
-          });
+        setRootContent(res.data);
+        // });
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        alert(err.response.data);
       });
   };
 
@@ -41,16 +42,10 @@ export default function File(props) {
         filename: `${file.parent}/${file.name}`.replace("./", ""),
       })
       .then((res) => {
-        axios
-          .post(`http://localhost:3000/files/`, {
-            folder: file.parent.replace("./", ""),
-          })
-          .then((res) => {
-            setRootContent(res.data);
-          });
+        setRootContent(res.data);
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        alert(err.response.data);
       });
   };
 
@@ -58,10 +53,32 @@ export default function File(props) {
     e.preventDefault();
     axios
       .post(`http://localhost:3000/files/download`, {
-        filename: `${file.name}`,
+        responseType: "blob",
+        filename: `${file.parent}/${file.name}`.replace("./", ""),
+      })
+      .then((res) => {
+        var blob = new Blob([res.data]);
+        FileSaver.saveAs(blob, "hello world.png");
+        // const fileURL = window.URL.createObjectURL(new Blob([res.data]));
+        // const fileLink = document.createElement("a");
+        // fileLink.href = fileURL;
+        // // const fileName = res.headers["content-disposition"].substring(22, 52);
+        // fileLink.setAttribute("download", `${file.name}`);
+        // fileLink.setAttribute("target", "_blank");
+        // document.body.appendChild(fileLink);
+        // fileLink.click();
+        // fileLink.remove();
+        // // res.data.blob().then((blob) => {
+        // //   let url = window.URL.createObjectURL(blob);
+        // //   let a = document.createElement("a");
+        // //   a.href = url;
+        // //   a.download = `download.${res.headers["content-type"].split("/")[1]}`;
+        // //   a.click();
+        // //   window.URL.revokeObjectURL(url);
+        // // });
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        alert(err.response.data);
       });
   };
 
@@ -87,9 +104,9 @@ export default function File(props) {
           <a href="#" onClick={deleteFile}>
             Delete File
           </a>
-          {/* <a href="#" onClick={downloadFile}>
+          <a href="#" onClick={downloadFile}>
             Download File
-          </a> */}
+          </a>
           <a href="#" onClick={showFileInfo}>
             File Info
           </a>

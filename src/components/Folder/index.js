@@ -30,17 +30,16 @@ export default function Folder(props) {
         oldName: `${folder.parent}/${folder.name}`,
         newName: `${folder.parent}/${newName}`,
       })
+      // .then((res) => {
+      //   axios
+      //     .post("http://localhost:3000/files/", { folder: "root" })
       .then((res) => {
-        axios
-          .post(`http://localhost:3000/files/`, {
-            folder: folder.parent.replace("./", ""),
-          })
-          .then((res) => {
-            setRootContent(res.data);
-          });
+        console.log(res.data);
+        setRootContent(res.data);
+        // });
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        alert(err.response.data);
       });
   };
 
@@ -51,16 +50,10 @@ export default function Folder(props) {
         folderName: `${folder.parent}/${folder.name}`.replace("./", ""),
       })
       .then((res) => {
-        axios
-          .post(`http://localhost:3000/files/`, {
-            folder: folder.parent.replace("./", ""),
-          })
-          .then((res) => {
-            setRootContent(res.data);
-          });
+        setRootContent(res.data);
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        alert(err.response.data);
       });
   };
   return (

@@ -11,7 +11,7 @@ export default function NewFolder() {
   const [currentFolder, setCurrentFolder] = useContext(CurrentFolderContext);
 
   const onClick = (e) => {
-    console.log("new folder name", e.target.value);
+    // console.log("new folder name", e.target.value);
     if (inputRef.current.value === "") {
       alert("Please insert folder name");
     }
@@ -20,17 +20,11 @@ export default function NewFolder() {
         folderName: `./${currentFolder}/${inputRef.current.value}`,
       })
       .then((res) => {
-        axios
-          .post(`http://localhost:3000/files/`, {
-            folder: currentFolder.replace("./", ""),
-          })
-          .then((res) => {
-            setRootContent(res.data);
-          });
+        setRootContent(res.data);
         setFolderPopup("");
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        alert(err.response.data);
       });
   };
   return (

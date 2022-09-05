@@ -5,6 +5,7 @@ import NewFolder from "../NewFolder";
 import axios from "axios";
 import RootContentContext from "../../contexts/RootContentContext";
 import CurrentFolderContext from "../../contexts/CurrentFolderContext";
+// import ClientChangedContentContext from "../../contexts/ClientChangedContentContext";
 
 export default function Button(props) {
   const folderPopup = useContext(FolderPopupContext);
@@ -12,6 +13,9 @@ export default function Button(props) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [rootContent, setRootContent] = useContext(RootContentContext);
   const [currentFolder, setCurrentFolder] = useContext(CurrentFolderContext);
+  // const [clientChangedRootContent, setClientChangedRootContent] = useContext(
+  //   ClientChangedContentContext
+  // );
 
   useEffect(() => {
     if (selectedFile) {
@@ -21,26 +25,21 @@ export default function Button(props) {
       // Update the formData object
       formData.append("file", selectedFile);
       formData.append("folder", currentFolder);
-
+      formData.append("filename", selectedFile.name);
       // Send formData object
       axios
         .post("http://localhost:3000/files/upload", formData)
         .then((res) => {
-          axios
-            .post(`http://localhost:3000/files/`, {
-              folder: currentFolder.replace("./", ""),
-            })
-            .then((res) => {
-              setRootContent(res.data);
-            });
+          setRootContent(res.data);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          alert(err.response.data);
         });
     }
   }, [selectedFile]);
 
   const onClick = (e) => {
+    // e.preventDefault();
     if (props.btnName === "New Folder") {
       folderPopup[1](<NewFolder />);
     } else if (props.btnName === "File Upload") {
